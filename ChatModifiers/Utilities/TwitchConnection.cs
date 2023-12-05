@@ -1,6 +1,8 @@
 ﻿using CatCore;
 using CatCore.Models.Twitch.IRC;
 using CatCore.Services.Twitch.Interfaces;
+using ChatModifiers.API;
+using System.Collections.Generic;
 
 namespace ChatModifiers.Utilities
 {
@@ -20,6 +22,18 @@ namespace ChatModifiers.Utilities
 
             if (!chatMessage.StartsWith("!"))
                 return;
+
+            /* Will later need additional checks */
+            
+            foreach (CustomModifier modifier in RegistrationManager._registeredModifiers)
+            {
+                if (chatMessage.StartsWith($"!{modifier.CommandKeyword.ToLower()}"))
+                {
+                    Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
+                    modifier.Function(message, chatMessage);
+                    break;
+                }
+            }
         }
     }
 }

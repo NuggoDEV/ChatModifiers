@@ -1,10 +1,10 @@
-﻿using ChatModifiers.API;
-using ChatModifiers.Installers;
+﻿using ChatModifiers.Installers;
+using ChatModifiers.Utilities;
 using ChatModifiers.UI;
-using ChatModifiers.Modifiers;
-using IPA;
 using SiraUtil.Zenject;
+using IPA;
 using IPALogger = IPA.Logging.Logger;
+
 
 namespace ChatModifiers
 {
@@ -20,9 +20,9 @@ namespace ChatModifiers
             
             zenjector.Install<AppInstaller>(Location.App);
             zenjector.Install<MenuInstaller>(Location.Menu);
-            
+
+            TwitchConnection.Initialize();
             CMFlow.CreateMenuButton();
-            ModifierManager.RegisterPluginModifiers();
         }
     }
 }
