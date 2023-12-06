@@ -1,6 +1,4 @@
-﻿using CatCore.Models.Twitch.IRC;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace ChatModifiers.API
 {
@@ -35,13 +33,19 @@ namespace ChatModifiers.API
     public class CustomModifier
     {
         public string Name { get; set; } = "Default";
+        public string Description { get; set; } = "Default Description";
+        public string Author { get; set; } = "Default Author";
+        public string PathToIcon { get; set; } = "Default Path";
         public string CommandKeyword { get; set; } = "default";
         public Action<MessageInfo, object[]> Function { get; set; }
         public ArgumentInfo[] Arguments { get; set; }
 
-        public CustomModifier(string name, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments)
         {
             Name = name;
+            Description = description;
+            Author = author;
+            PathToIcon = pathToIcon;
             CommandKeyword = commandKeyword;
             Function = function;
             Arguments = arguments;

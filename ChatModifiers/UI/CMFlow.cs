@@ -1,8 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
 using HMUI;
-using SiraUtil.Logging;
-using Zenject;
 
 namespace ChatModifiers.UI
 {

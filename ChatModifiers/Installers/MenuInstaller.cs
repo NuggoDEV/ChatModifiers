@@ -1,9 +1,5 @@
 ﻿using ChatModifiers.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ChatModifiers.UI.ModifiersMenuHijacking;
 using Zenject;
 
 namespace ChatModifiers.Installers
@@ -14,6 +10,8 @@ namespace ChatModifiers.Installers
         {
             Container.Bind<CMFlow>().FromNewComponentOnNewGameObject().AsSingle();
             Container.Bind<CMView>().FromNewComponentAsViewController().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<CustomModifierMenuUI>().AsSingle();
         }
     }
 }
