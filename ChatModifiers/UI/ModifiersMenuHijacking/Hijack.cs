@@ -16,10 +16,10 @@ using Object = UnityEngine.Object;
 
 namespace ChatModifiers.UI.ModifiersMenuHijacking
 {
-    internal class CustomModifierMenuUI : IInitializable
+    internal class CustomModifierMenuUI : IInitializable, IFixedTickable
     {
         [Inject] internal SiraLog _log;
-
+        internal static bool shouldRefresh = false;
         internal GameplayModifiersPanelController gameplayModifiersPanelController;
         private Dictionary<CustomModifier, GameplayModifierToggle> modifierButtonMap = new Dictionary<CustomModifier, GameplayModifierToggle>();
 
@@ -145,7 +145,6 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             {
                 theContainer.gameObject.SetActive(value);
             }
-            ReloadModifiers();
         }
 
 
@@ -153,7 +152,6 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         private void PostParse()
         {
             if (theContainer == null) return;
-            ReloadModifiers();
         }
 
         private string GetModifierIdentifier(CustomModifier modifier)
@@ -168,7 +166,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         private void ReloadModifiers()
         {
-            _log.Info("Reloading modifiers");
+            _log.Notice("Reloading modifiers");
 
             if (Plugin.debug) RegistrationManager.LogAllModifiers(true);
 
@@ -199,7 +197,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         private void ClearModifierGrid()
         {
-            _log.Info($"Attempting to clear modifierGrid with {modifierGrid.transform.childCount} children if needed.");
+            //_log.Info($"Attempting to clear modifierGrid with {modifierGrid.transform.childCount} children if needed.");
 
             foreach (Transform child in modifierGrid.transform)
             {
@@ -216,16 +214,16 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
                 }
             }
 
-            _log.Info("ModifierGrid cleared.");
+            //_log.Info("ModifierGrid cleared.");
         }
 
         private void SetupBSML(GameObject parent, string m)
         {
             BeatSaberMarkupLanguage.BSMLParser.instance.Parse(BeatSaberMarkupLanguage.Utilities.GetResourceContent(System.Reflection.Assembly.GetExecutingAssembly(), m), parent, this);
             theContainer.gameObject.SetActive(false);
-            ReloadModifiers();
         }
 
+        private bool isInitialized = false;
         public void Initialize()
         {
             gameplayModifiersPanelController = Resources.FindObjectsOfTypeAll<GameplayModifiersPanelController>().FirstOrDefault();
@@ -236,6 +234,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             statusText = gameplayModifiersPanelController.transform.Find("Info")?.gameObject;
             MoveAllGOsUp(hintText, modifiersTable, statusText);
             Resources.FindObjectsOfTypeAll<SelectModifiersViewController>().FirstOrDefault().didActivateEvent += CustomModifierMenuUI_didActivateEvent;
+            isInitialized = true;
         }
 
         private void MoveAllGOsUp(GameObject a, GameObject b, GameObject c)
@@ -263,8 +262,17 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         private void CustomModifierMenuUI_didActivateEvent(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
-            _log.Info("Activating");
+            //_log.Info("Activating");
             ReloadModifiers();
+        }
+
+        public void FixedTick()
+        {
+            if (shouldRefresh &&  isInitialized)
+            {
+                ReloadModifiers();
+                shouldRefresh = false;
+            }
         }
     }
 

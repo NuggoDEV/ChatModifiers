@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatModifiers.UI.ModifiersMenuHijacking;
+using System;
 using System.Collections.Generic;
 
 namespace ChatModifiers.API
@@ -18,6 +19,7 @@ namespace ChatModifiers.API
                 }
 
                 _registeredModifiers.Add(modifier);
+                CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
                 return true;
             }
@@ -43,6 +45,7 @@ namespace ChatModifiers.API
                 }
 
                 _registeredModifiers.Remove(modifier);
+                CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Unregistered Modifier: {modifier.Name}");
                 return true;
             }
