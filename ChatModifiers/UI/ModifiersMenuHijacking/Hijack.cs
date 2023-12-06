@@ -3,6 +3,7 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Components.Settings;
 using ChatModifiers.API;
 using HMUI;
+using IPA.Config.Data;
 using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,18 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             toggleSetting.toggle = gameObject.GetComponent<Toggle>();
             toggleSetting.toggle.onValueChanged.RemoveAllListeners();
             gameplayModifierToggle.transform.SetParent(parent, false);
+            if(Config.instance.enabledModifiers.Contains(GetModifierIdentifier(customModifier)))
+            {
+                toggleSetting.toggle.isOn = true;
+                toggleSetting.Value = true;
+                toggleSetting.ApplyValue();
+            }
+            else
+            {
+                toggleSetting.toggle.isOn = false;
+                toggleSetting.Value = false;
+                toggleSetting.ApplyValue();
+            }
             toggleSetting.toggle.onValueChanged.AddListener((bool value) =>
             {
                 toggleSetting.Value = value;
@@ -89,7 +102,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             _log.Info(remove ? $"Removing modifier {modifier.Name}" : $"Adding modifier {modifier.Name}");
             try
             {
-                if (!remove)
+                if (remove)
                 {
                     Config.instance.enabledModifiers.Remove(GetModifierIdentifier(modifier));
                     Config.instance.Save();
@@ -186,18 +199,21 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         private void ClearModifierGrid()
         {
-            _log.Info($"Clearing modifierGrid with {modifierGrid.transform.childCount} children.");
+            _log.Info($"Attempting to clear modifierGrid with {modifierGrid.transform.childCount} children if needed.");
 
             foreach (Transform child in modifierGrid.transform)
             {
-                var customModifier = modifierButtonMap.FirstOrDefault(x => x.Value == child.gameObject).Key;
-
-                if (customModifier != null)
+                if (modifierButtonMap.ContainsValue(child.GetComponent<GameplayModifierToggle>()))
                 {
-                    modifierButtonMap.Remove(customModifier);
-                }
+                    var customModifier = modifierButtonMap.FirstOrDefault(x => x.Value == child.GetComponent<GameplayModifierToggle>()).Key;
 
-                Object.DestroyImmediate(child.gameObject);
+                    if (customModifier != null)
+                    {
+                        modifierButtonMap.Remove(customModifier);
+                    }
+
+                    Object.DestroyImmediate(child.gameObject);
+                }
             }
 
             _log.Info("ModifierGrid cleared.");

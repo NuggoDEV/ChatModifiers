@@ -59,6 +59,7 @@ namespace ChatModifiers.API
 
         public static void LogAllModifiers(bool allDetails)
         {
+            Plugin.Log.Notice("Logging all modifiers");
             foreach (CustomModifier modifier in _registeredModifiers)
             {
                 if (allDetails)
