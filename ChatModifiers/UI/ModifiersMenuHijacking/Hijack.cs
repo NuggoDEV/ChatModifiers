@@ -42,6 +42,9 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         [UIObject("noModsInstalledText")]
         private GameObject noModsInstalledText;
 
+
+        // yoinked from bsml and altered to work
+
         GameplayModifierToggle toggleTemplate;
         public GameplayModifierToggle CreateModifier(Transform parent, CustomModifier customModifier)
         {
