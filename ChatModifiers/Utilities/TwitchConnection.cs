@@ -46,7 +46,7 @@ namespace ChatModifiers.Utilities
                         }
                     }
 
-                    modifier.Function.Invoke(message, arguments.ToArray());
+                    modifier.Function.Invoke(new MessageInfo(chatMessage, message.Sender.UserName, message.Channel.Name, DateTime.Now), arguments.ToArray());
                     break;
                 }
             }

@@ -16,14 +16,30 @@ namespace ChatModifiers.API
         }
     }
 
+    public class MessageInfo
+    {
+        public string Message { get; set; }
+        public string Author { get; set; }
+        public string Channel { get; set; }
+        public DateTime TimeStamp { get; set; }
+
+        public MessageInfo(string message, string author, string channel, DateTime timeStamp)
+        {
+            Message = message;
+            Author = author;
+            Channel = channel;
+            TimeStamp = timeStamp;
+        }
+    }
+
     public class CustomModifier
     {
         public string Name { get; set; } = "Default";
         public string CommandKeyword { get; set; } = "default";
-        public Action<TwitchMessage, object[]> Function { get; set; }
+        public Action<MessageInfo, object[]> Function { get; set; }
         public ArgumentInfo[] Arguments { get; set; }
 
-        public CustomModifier(string name, string commandKeyword, Action<TwitchMessage, object[]> function, ArgumentInfo[] arguments)
+        public CustomModifier(string name, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments)
         {
             Name = name;
             CommandKeyword = commandKeyword;
