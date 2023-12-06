@@ -1,4 +1,5 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Components.Settings;
 using ChatModifiers.API;
@@ -66,10 +67,19 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             Object.Destroy(gameObject.GetComponent<HoverTextSetter>());
             Object.Destroy(gameObject.transform.Find("Multiplier").gameObject);
             GameObject gameObject2 = gameObject.transform.Find("Name").gameObject;
-            TextMeshProUGUI component = gameObject2.GetComponent<TextMeshProUGUI>();
-            component.text = customModifier.Name;
+            TextMeshProUGUI nameText = gameObject2.GetComponent<TextMeshProUGUI>();
+            nameText.text = $"<i>{customModifier.Name}</i>";
+            nameText.richText = true;
+
+            GameObject authorGameObject = Object.Instantiate(gameObject2, gameObject2.transform);
+            TextMeshProUGUI authorText = authorGameObject.GetComponent<TextMeshProUGUI>();
+            authorText.text = $"{customModifier.Author}";
+
+            RectTransform rectTransform = authorGameObject.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition = new Vector2(0f, -4f);
+
             List<Component> components = gameObject.AddComponent<ExternalComponents>().components;
-            components.Add(component);
+            components.Add(nameText);
             ImageView imageView = gameObject.transform.Find("Icon").GetComponent<Image>() as ImageView;
             imageView.sprite = BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(customModifier.PathToIcon);
             components.Add(gameObject.transform.Find("Icon").GetComponent<Image>());
@@ -96,8 +106,15 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
                 UpdateConfig(customModifier, !value);
             });
             modifierButtonMap.Add(customModifier, gameplayModifierToggle);
+            AddHoverHint(gameplayModifierToggle.transform as RectTransform, customModifier.Description);
             gameObject.SetActive(value: true);
             return gameplayModifierToggle;
+        }
+
+        private void AddHoverHint(RectTransform rectTransform, string text)
+        {
+            HoverHint hover = BeatSaberUI.DiContainer.InstantiateComponent<HoverHint>(rectTransform.gameObject);
+            hover.text = text;
         }
 
         internal bool UpdateConfig(CustomModifier modifier, bool remove)
@@ -213,7 +230,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
                         modifierButtonMap.Remove(customModifier);
                     }
 
-                    Object.DestroyImmediate(child.gameObject);
+                    Object.Destroy(child.gameObject);
                 }
             }
 
