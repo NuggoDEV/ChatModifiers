@@ -153,11 +153,6 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             return $"{item.modifierTitle}_{item.author}";
         }
 
-        private void test(MessageInfo a, object[] b)
-        {
-            _log.Info("test");
-        }
-
         private void ReloadModifiers()
         {
             _log.Info("Reloading modifiers");
