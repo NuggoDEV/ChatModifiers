@@ -2,6 +2,7 @@
 using CatCore.Models.Twitch.IRC;
 using CatCore.Services.Twitch.Interfaces;
 using ChatModifiers.API;
+using System;
 using System.Collections.Generic;
 
 namespace ChatModifiers.Utilities
@@ -24,13 +25,28 @@ namespace ChatModifiers.Utilities
                 return;
 
             /* Will later need additional checks */
-            
+
             foreach (CustomModifier modifier in RegistrationManager._registeredModifiers)
             {
                 if (chatMessage.StartsWith($"!{modifier.CommandKeyword.ToLower()}"))
                 {
                     Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
-                    modifier.Function(message, chatMessage);
+
+                    string[] commandParts = chatMessage.Split(' ');
+                    List<object> arguments = new List<object>();
+
+                    for (int i = 1; i < commandParts.Length; i++)
+                    {
+                        if (i - 1 < modifier.Arguments.Length)
+                        {
+                            string argString = commandParts[i];
+                            Type argType = modifier.Arguments[i - 1].Type;
+                            object argValue = Convert.ChangeType(argString, argType);
+                            arguments.Add(argValue);
+                        }
+                    }
+
+                    modifier.Function.Invoke(message, arguments.ToArray());
                     break;
                 }
             }
