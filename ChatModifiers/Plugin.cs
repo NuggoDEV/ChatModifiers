@@ -17,7 +17,8 @@ namespace ChatModifiers
         public Plugin(IPALogger logger, Zenjector zenjector)
         {
             Log = logger;
-            
+
+            zenjector.UseLogger(logger);
             zenjector.Install<AppInstaller>(Location.App);
             zenjector.Install<MenuInstaller>(Location.Menu);
 

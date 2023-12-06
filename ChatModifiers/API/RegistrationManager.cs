@@ -1,10 +1,14 @@
-﻿using System;
+﻿using SiraUtil.Logging;
+using System;
 using System.Collections.Generic;
+using Zenject;
 
 namespace ChatModifiers.API
 {
     public class RegistrationManager
     {
+        [Inject] private static SiraLog _log;
+
         internal static List<CustomModifier> _registeredModifiers = new List<CustomModifier>();
 
         public static bool RegisterModifier(CustomModifier modifier)
@@ -13,22 +17,22 @@ namespace ChatModifiers.API
             {
                 if (_registeredModifiers.Contains(modifier))
                 {
-                    Plugin.Log.Info($"Modifier {modifier.Name} is already registered.");
+                    _log.Info($"Modifier {modifier.Name} is already registered.");
                     return false;
                 }
 
                 _registeredModifiers.Add(modifier);
-                Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
+                _log.Info($"Registered Modifier: {modifier.Name}");
                 return true;
             }
             catch (Exception ex)
             {
-                Plugin.Log.Error($"Error during registering modifier {modifier.Name}: {ex.Message}");
+                _log.Error($"Error during registering modifier {modifier.Name}: {ex.Message}");
                 return false;
             }
             finally
             {
-                Plugin.Log.Info($"Registration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "successful" : "failed")} for modifier {modifier.Name}");
+                _log.Notice($"Registration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "successful" : "failed")} for modifier {modifier.Name}");
             }
         }
 
@@ -38,22 +42,22 @@ namespace ChatModifiers.API
             {
                 if (!_registeredModifiers.Contains(modifier))
                 {
-                    Plugin.Log.Info($"Modifier {modifier.Name} is not registered.");
+                    _log.Info($"Modifier {modifier.Name} is not registered.");
                     return false;
                 }
 
                 _registeredModifiers.Remove(modifier);
-                Plugin.Log.Info($"Unregistered Modifier: {modifier.Name}");
+                _log.Info($"Unregistered Modifier: {modifier.Name}");
                 return true;
             }
             catch (Exception ex)
             {
-                Plugin.Log.Error($"Error during unregistering modifier {modifier.Name}: {ex.Message}");
+                _log.Error($"Error during unregistering modifier {modifier.Name}: {ex.Message}");
                 return false;
             }
             finally
             {
-                Plugin.Log.Info($"Unregistration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "failed" : "successful")} for modifier {modifier.Name}");
+                _log.Notice($"Unregistration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "failed" : "successful")} for modifier {modifier.Name}");
             }
         }
     }
