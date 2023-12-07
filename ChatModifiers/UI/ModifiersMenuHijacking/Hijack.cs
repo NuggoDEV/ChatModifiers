@@ -4,7 +4,6 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Components.Settings;
 using ChatModifiers.API;
 using HMUI;
-using IPA.Config.Data;
 using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
@@ -88,7 +87,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             toggleSetting.toggle = gameObject.GetComponent<Toggle>();
             toggleSetting.toggle.onValueChanged.RemoveAllListeners();
             gameplayModifierToggle.transform.SetParent(parent, false);
-            if(Config.instance.enabledModifiers.Contains(GetModifierIdentifier(customModifier)))
+            if (Config.instance.enabledModifiers.Contains(GetModifierIdentifier(customModifier)))
             {
                 toggleSetting.toggle.isOn = true;
                 toggleSetting.Value = true;
@@ -289,7 +288,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         public void FixedTick()
         {
-            if (shouldRefresh &&  isInitialized)
+            if (shouldRefresh && isInitialized)
             {
                 ReloadModifiers();
                 shouldRefresh = false;

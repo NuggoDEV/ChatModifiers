@@ -1,7 +1,5 @@
 ﻿using ChatModifiers.Utilities;
-using System.Configuration.Install;
 using Zenject;
-using static ChatModifiers.Utilities.GameCoreUtils;
 using Installer = Zenject.Installer;
 
 namespace ChatModifiers.Installers
