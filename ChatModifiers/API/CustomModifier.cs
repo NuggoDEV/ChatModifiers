@@ -2,6 +2,15 @@
 
 namespace ChatModifiers.API
 {
+
+    public enum Areas
+    {
+        None,
+        Menu,
+        Game,
+        Both
+    }
+
     public class ArgumentInfo
     {
         public string Name { get; set; }
@@ -39,8 +48,9 @@ namespace ChatModifiers.API
         public string CommandKeyword { get; set; } = "default";
         public Action<MessageInfo, object[]> Function { get; set; }
         public ArgumentInfo[] Arguments { get; set; }
+        public Areas ActiveAreas { get; set; } = Areas.None;
 
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas)
         {
             Name = name;
             Description = description;
@@ -49,6 +59,7 @@ namespace ChatModifiers.API
             CommandKeyword = commandKeyword;
             Function = function;
             Arguments = arguments;
+            ActiveAreas = areas;
         }
     }
 }

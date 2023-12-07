@@ -22,7 +22,7 @@ namespace ChatModifiers
             zenjector.UseLogger(logger);
             zenjector.Install<AppInstaller>(Location.App);
             zenjector.Install<MenuInstaller>(Location.Menu);
-
+            zenjector.Install<GameCoreInstaller>(Location.GameCore);
             TwitchConnection.Initialize();
             CMFlow.CreateMenuButton();
         }
