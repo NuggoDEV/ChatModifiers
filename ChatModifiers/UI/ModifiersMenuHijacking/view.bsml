@@ -2,7 +2,7 @@
 	<horizontal id='theContainer' spacing='-38' preferred-height='50'>
 		<text id='noModsInstalledText' font-align='Center' all-uppercase='true' font-size='6' font-color='orange' text='No modifiers installed'/>
 		<!-- CELL VIEW -->
-			<modifier-container id='modifierContainer' text='Chat Modifiers' label='Chat Modifiers' pref-width='80' pref-height='50' size-delta-x='90'>
+			<modifier-container id='modifierContainer' text='Chat Modifiers' label='Chat Modifiers' pref-width='100' pref-height='75' size-delta-x='90'>
 				<grid bg='round-rect-panel' cell-size-x='25' spacing-x='2' cell-size-y='10' spacing-y='2' pref-width='80' pref-height='50' pad='2' id='modifierGrid'>
 				</grid>
 			</modifier-container>

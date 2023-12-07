@@ -81,7 +81,7 @@ namespace ChatModifiers.Utilities
                         return;
                     }
 
-                    modifier.Function.Invoke(new MessageInfo(chatMessage, message.Sender.UserName, message.Channel.Name, DateTime.Now), arguments.ToArray());
+                    modifier.Function.Invoke(new MessageInfo(chatMessage, message.Sender.DisplayName, message.Channel.Name, DateTime.Now), arguments.ToArray());
                     OnMessage?.Invoke(message, modifier);
                     break;
                 }
