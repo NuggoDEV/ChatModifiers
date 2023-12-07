@@ -68,12 +68,13 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             Object.Destroy(gameObject.transform.Find("Multiplier").gameObject);
             GameObject gameObject2 = gameObject.transform.Find("Name").gameObject;
             TextMeshProUGUI nameText = gameObject2.GetComponent<TextMeshProUGUI>();
-            nameText.text = $"<i>{customModifier.Name}</i>";
-            nameText.richText = true;
+            nameText.text = customModifier.Name;
+            nameText.fontStyle = FontStyles.Italic;
 
             GameObject authorGameObject = Object.Instantiate(gameObject2, gameObject2.transform);
             TextMeshProUGUI authorText = authorGameObject.GetComponent<TextMeshProUGUI>();
             authorText.text = $"{customModifier.Author}";
+            authorText.fontStyle = FontStyles.Normal;
 
             RectTransform rectTransform = authorGameObject.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = new Vector2(0f, -4f);
