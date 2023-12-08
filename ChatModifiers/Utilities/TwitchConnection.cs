@@ -78,16 +78,14 @@ namespace ChatModifiers.Utilities
                         {
                             object argValue = Convert.ChangeType(argString, argType);
                             arguments.Add(argValue);
-
                         }
                         else
                         {
                             Plugin.Log.Warn($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
                             message.Channel.SendMessage($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
-                            return;
+                            return; 
                         }
                     }
-
                     if (arguments.Count != modifier.Arguments.Length)
                     {
                         Plugin.Log.Warn($"Not enough arguments provided for {modifier.Name}");
