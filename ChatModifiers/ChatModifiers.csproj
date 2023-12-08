@@ -156,6 +156,7 @@
     <Compile Include="UI\CMView.cs" />
     <Compile Include="UI\ModifiersMenuHijacking\Hijack.cs" />
     <Compile Include="Utilities\GameCoreUtils.cs" />
+    <Compile Include="Utilities\StaticUtils.cs" />
     <Compile Include="Utilities\TwitchConnection.cs" />
   </ItemGroup>
   <ItemGroup>

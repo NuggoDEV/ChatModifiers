@@ -1,4 +1,5 @@
-﻿using IPA.Config.Stores;
+﻿using ChatModifiers.API;
+using IPA.Config.Stores;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -10,14 +11,13 @@ namespace ChatModifiers
     {
         internal const string FileName = "./UserData/ChatModifiersConfig.json";
 
-        internal static Config instance { get; set; }
+        internal static Config Instance { get; set; } = new Config();
 
-        public List<string> enabledModifiers { get; set; } = new List<string>();
+        public Dictionary<string, ModifierSettings> Mods { get; set; } = new Dictionary<string, ModifierSettings>();
 
         public void Save()
         {
-            CheckForConfig();
-            string json = JsonConvert.SerializeObject(instance, Newtonsoft.Json.Formatting.Indented);
+            string json = JsonConvert.SerializeObject(Instance, Newtonsoft.Json.Formatting.Indented);
             System.IO.File.WriteAllText(FileName, json);
         }
 
@@ -26,21 +26,19 @@ namespace ChatModifiers
             if (System.IO.File.Exists(FileName))
             {
                 string json = System.IO.File.ReadAllText(FileName);
-                instance = JsonConvert.DeserializeObject<Config>(json);
+                Instance = JsonConvert.DeserializeObject<Config>(json);
             }
             else
             {
-                instance = new Config();
                 Save();
             }
         }
+    }
 
-        public void CheckForConfig()
-        {
-            if (!System.IO.File.Exists(FileName))
-            {
-                System.IO.File.Create(FileName);
-            }
-        }
+    public class ModifierSettings
+    {
+        public bool Enabled { get; set; } = true;
+        public Dictionary<string, object> AdditionalSettings { get; set; } = new Dictionary<string, object>();
+        public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
     }
 }

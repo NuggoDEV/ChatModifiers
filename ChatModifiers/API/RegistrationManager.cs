@@ -1,7 +1,6 @@
 ﻿using ChatModifiers.UI.ModifiersMenuHijacking;
 using System;
 using System.Collections.Generic;
-
 namespace ChatModifiers.API
 {
     public class RegistrationManager
@@ -18,7 +17,15 @@ namespace ChatModifiers.API
                     return false;
                 }
 
+                var settings = new ModifierSettings(modifier.Settings);
+
+                foreach (var setting in modifier.Settings)
+                {
+                    settings.AdditionalSettings.Add(setting.Key, setting.Value);
+                }
+
                 _registeredModifiers.Add(modifier);
+                Config.Instance.Mods.Add(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);
                 CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
                 return true;
@@ -33,6 +40,7 @@ namespace ChatModifiers.API
                 Plugin.Log.Notice($"Registration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "successful" : "failed")} for modifier {modifier.Name}");
             }
         }
+
 
         public static bool UnregisterModifier(CustomModifier modifier)
         {

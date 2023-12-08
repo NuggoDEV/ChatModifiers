@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChatModifiers.API
 {
-
     public enum Areas
     {
         None,
@@ -46,11 +46,11 @@ namespace ChatModifiers.API
         public string Author { get; set; } = "Default Author";
         public string PathToIcon { get; set; } = "Default Path";
         public string CommandKeyword { get; set; } = "default";
-        public Action<MessageInfo, object[]> Function { get; set; }
-        public ArgumentInfo[] Arguments { get; set; }
+        public Action<MessageInfo, object[]> Function { get; set; } = null;
+        public ArgumentInfo[] Arguments { get; set; } = null;
         public Areas ActiveAreas { get; set; } = Areas.None;
-
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas)
+        public Dictionary<string, object> Settings { get; set; } = new Dictionary<string, object>();
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, Dictionary<string, object> settings)
         {
             Name = name;
             Description = description;
@@ -60,6 +60,7 @@ namespace ChatModifiers.API
             Function = function;
             Arguments = arguments;
             ActiveAreas = areas;
+            Settings = settings;
         }
     }
 }

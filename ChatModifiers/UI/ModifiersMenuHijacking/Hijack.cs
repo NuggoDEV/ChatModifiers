@@ -87,10 +87,12 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             toggleSetting.toggle = gameObject.GetComponent<Toggle>();
             toggleSetting.toggle.onValueChanged.RemoveAllListeners();
             gameplayModifierToggle.transform.SetParent(parent, false);
-            if (Config.instance.enabledModifiers.Contains(GetModifierIdentifier(customModifier)))
+            string modifierIdentifier = ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(customModifier);
+
+            if (Config.Instance.Mods.TryGetValue(modifierIdentifier, out ModifierSettings settings))
             {
-                toggleSetting.toggle.isOn = true;
-                toggleSetting.Value = true;
+                toggleSetting.toggle.isOn = settings.Enabled;
+                toggleSetting.Value = settings.Enabled;
                 toggleSetting.ApplyValue();
             }
             else
@@ -117,23 +119,24 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             hover.text = text;
         }
 
-        internal bool UpdateConfig(CustomModifier modifier, bool remove)
+        internal bool UpdateConfig(CustomModifier modifier, bool newValue)
         {
-            _log.Info(remove ? $"Removing modifier {modifier.Name}" : $"Adding modifier {modifier.Name}");
             try
             {
-                if (remove)
+                string modifierIdentifier = ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier);
+
+                if (Config.Instance.Mods.TryGetValue(modifierIdentifier, out ModifierSettings settings))
                 {
-                    Config.instance.enabledModifiers.Remove(GetModifierIdentifier(modifier));
-                    Config.instance.Save();
-                    return true;
+                    settings.Enabled = newValue;
                 }
                 else
                 {
-                    Config.instance.enabledModifiers.Add(GetModifierIdentifier(modifier));
-                    Config.instance.Save();
-                    return true;
+                    Config.Instance.Mods.Add(modifierIdentifier, new ModifierSettings(modifier.Settings));
+                    Config.Instance.Mods[modifierIdentifier].Enabled = newValue;
                 }
+
+                Config.Instance.Save();
+                return true;
             }
             catch (Exception ex)
             {
@@ -174,15 +177,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             if (theContainer == null) return;
         }
 
-        private string GetModifierIdentifier(CustomModifier modifier)
-        {
-            return $"{modifier.Name}_{modifier.Author}";
-        }
 
-        private string GetModifierIdentifier(ModifierListItem item)
-        {
-            return $"{item.modifierTitle}_{item.author}";
-        }
 
         private void ReloadModifiers()
         {
