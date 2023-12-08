@@ -1,9 +1,8 @@
-﻿using ChatModifiers.API;
-using IPA.Config.Stores;
+﻿using IPA.Config.Stores;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ChatModifiers

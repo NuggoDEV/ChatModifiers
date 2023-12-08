@@ -12,7 +12,7 @@ namespace ChatModifiers.UI
 
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
-            
+
         }
     }
 }

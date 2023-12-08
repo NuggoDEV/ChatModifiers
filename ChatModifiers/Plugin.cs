@@ -1,7 +1,4 @@
-﻿using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.MenuButtons;
-using ChatModifiers.Installers;
-using ChatModifiers.UI;
+﻿using ChatModifiers.Installers;
 using ChatModifiers.Utilities;
 using IPA;
 using SiraUtil.Zenject;

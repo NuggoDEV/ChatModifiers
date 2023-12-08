@@ -19,7 +19,7 @@ namespace ChatModifiers.API
 
                 var settings = new ModifierSettings(modifier.Settings);
                 _registeredModifiers.Add(modifier);
-                if(!Config.Instance.Mods.ContainsKey(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier)))
+                if (!Config.Instance.Mods.ContainsKey(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier)))
                 {
                     settings.Enabled = false;
                     Config.Instance.Mods.Add(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);

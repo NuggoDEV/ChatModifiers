@@ -63,28 +63,14 @@ namespace ChatModifiers.Utilities
                         string argString = commandParts[i];
                         Type argType = modifier.Arguments[i - 1].Type;
 
-                        if (argType.IsEnum)
-                        {
-                            Plugin.Log.Info($"Enum detected: {argType.Name}");
-                            string[] strings = argType.GetEnumNames();
-                            string matched = Array.Find(strings, name => string.Equals(name, argString, StringComparison.OrdinalIgnoreCase));
-                            if(matched != null)
-                            {
-                                object enumValue = Enum.Parse(argType, matched);
-                                arguments.Add(enumValue);
-                            }
-                        }
-                        else if (IsAssignableType(argType, argString))
-                        {
-                            object argValue = Convert.ChangeType(argString, argType);
-                            arguments.Add(argValue);
-                        }
-                        else
+                        object argValue = HandleArg(argString, argType);
+                        if (argValue == null)
                         {
                             Plugin.Log.Warn($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
                             message.Channel.SendMessage($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
-                            return; 
+                            return;
                         }
+                        arguments.Add(argValue);
                     }
                     if (arguments.Count != modifier.Arguments.Length)
                     {
@@ -100,5 +86,32 @@ namespace ChatModifiers.Utilities
             }
         }
 
+        internal static object HandleArg(string argString, Type argType)
+        {
+            if (argType.IsEnum)
+            {
+                Plugin.Log.Info($"Enum detected: {argType.Name}");
+                string[] strings = argType.GetEnumNames();
+                string matched = Array.Find(strings, name => string.Equals(name, argString, StringComparison.OrdinalIgnoreCase));
+                if (matched != null)
+                {
+                    object enumValue = Enum.Parse(argType, matched);
+                    return enumValue;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (IsAssignableType(argType, argString))
+            {
+                object argValue = Convert.ChangeType(argString, argType);
+                return argValue;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
