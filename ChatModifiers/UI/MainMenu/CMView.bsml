@@ -1,8 +1,30 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
-	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
-	>
-		<vertical>
-			<text id='fortnitetext' text='fortnite'/>
-		</vertical>
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<vertical active='true' pad='2' horizontal-fit='PreferredSize' vertical-fit='PreferredSize'>
+		<stack>
+			<vertical spacing='5' id='noModsInstalledVertical'>
+				<text align='Center' id='noModsInstalledText' font-align='Center' all-uppercase='true' font-size='6' font-color='orange' text='No modifiers installed'/>
+			</vertical>
+			<custom-list ignore-layout="true" anchor-pos-x="-4" id="modifierList" show-scrollbar="true" stick-scrolling="true" size-delta-y="60" contents="modifiersContents" clickable-cells="false" cell-size="11" list-width="57">
+				<horizontal id="backgroundImage" bg="panel-top" preferred-height="11" vertical-fit="PreferredSize" preferred-width="50" horizontal-fit="PreferredSize">
 
+					<stack pref-width="10.5" preferred-height="10.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize" ignore-layout="true" anchor-pos-x="-21">
+						<image id="modifierImage" src="#ClockIcon" preserve-aspect="true"/>
+					</stack>
+
+					<vertical preferred-width="22.5" preferred-height="7.5" horizontal-fit="PreferredSize" vertical-fit="PreferredSize" ignore-layout="true" anchor-pos-x="-3.25">
+						<text text="~modifierTitle" font-size="3.5"/>
+						<text text="~modifierAuthor" font-size="2.25"/>
+					</vertical>
+
+					<vertical preferred-width="22.5" preferred-height="7.5" spacing="2" horizontal-fit="PreferredSize" vertical-fit="PreferredSize" ignore-layout="true" anchor-pos-x="18.25" anchor-pos-y="1">
+						<action-button word-wrapping="false" preferred-height="10" size-delta-x="8.25" font-size="6" size-delta-y="6" text=">" preferred-width="10" on-click="modifierClicked"/>
+					</vertical>
+
+				</horizontal>
+			</custom-list>
+		</stack>
+	</vertical>
+	<stack ignore-layout="true" preferred-width="10" preferred-height="10" anchor-pos-y="50" anchor-pos-x="40">
+		<button-with-icon icon='#ReloadIcon' on-click='reloadModifiers'/>
+	</stack>
 </bg>

@@ -242,13 +242,11 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         public void Initialize()
         {
             gameplayModifiersPanelController = Resources.FindObjectsOfTypeAll<GameplayModifiersPanelController>().FirstOrDefault();
-
             SetupBSML(gameplayModifiersPanelController.gameObject, "ChatModifiers.UI.ModifiersMenuHijacking.view.bsml");
             hintText = gameplayModifiersPanelController.transform.Find("HintText")?.gameObject;
             modifiersTable = gameplayModifiersPanelController.transform.Find("Modifiers")?.gameObject;
             statusText = gameplayModifiersPanelController.transform.Find("Info")?.gameObject;
             MoveAllGOsUp(hintText, modifiersTable, statusText);
-            Resources.FindObjectsOfTypeAll<SelectModifiersViewController>().FirstOrDefault().didActivateEvent += CustomModifierMenuUI_didActivateEvent;
             isInitialized = true;
         }
 
@@ -272,13 +270,6 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             {
                 rectTransformC.anchoredPosition += new Vector2(0f, 3.75f);
             }
-        }
-
-
-        private void CustomModifierMenuUI_didActivateEvent(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
-        {
-            //_log.Info("Activating");
-            ReloadModifiers();
         }
 
         public void FixedTick()

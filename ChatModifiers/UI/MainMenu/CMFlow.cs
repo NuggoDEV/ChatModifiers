@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
+using ChatModifiers.UI.MainMenu;
 using HMUI;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +16,6 @@ namespace ChatModifiers.UI
 
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
-
             if (firstActivation)
             {
                 SetTitle("ChatModifiers");
@@ -26,7 +26,6 @@ namespace ChatModifiers.UI
 
         protected override void BackButtonWasPressed(ViewController topViewController)
         {
-
             SetLeftScreenViewController(null, ViewController.AnimationType.None);
             SetRightScreenViewController(null, ViewController.AnimationType.None);
             _lastFlowCoordinator.DismissFlowCoordinator(this);
@@ -34,7 +33,6 @@ namespace ChatModifiers.UI
 
         internal void ShowMainFlowCoordinator()
         {
-
             CMFlow flowCoordinator = Resources.FindObjectsOfTypeAll<CMFlow>().FirstOrDefault();
             if (flowCoordinator != null)
             {
@@ -50,7 +48,6 @@ namespace ChatModifiers.UI
 
         internal static FlowCoordinator DeepestChildFlowCoordinator(FlowCoordinator root)
         {
-
             var flow = root.childFlowCoordinator;
             if (flow == null) return root;
             if (flow.childFlowCoordinator == null || flow.childFlowCoordinator == flow)

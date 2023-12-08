@@ -1,4 +1,5 @@
 ﻿using ChatModifiers.UI;
+using ChatModifiers.UI.MainMenu;
 using ChatModifiers.UI.ModifiersMenuHijacking;
 using Zenject;
 

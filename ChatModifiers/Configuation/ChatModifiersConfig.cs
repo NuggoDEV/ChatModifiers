@@ -33,5 +33,13 @@ namespace ChatModifiers
         public bool Enabled { get; set; }
         public Dictionary<string, object> AdditionalSettings { get; set; }
         public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
+
+        public void SetAdditionalSetting(string key, object value)
+        {
+            if (AdditionalSettings.ContainsKey(key))
+                AdditionalSettings[key] = value;
+            else
+                AdditionalSettings.Add(key, value);
+        }
     }
 }
