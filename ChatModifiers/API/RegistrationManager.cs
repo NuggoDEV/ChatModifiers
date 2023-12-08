@@ -18,15 +18,10 @@ namespace ChatModifiers.API
                 }
 
                 var settings = new ModifierSettings(modifier.Settings);
-
-                foreach (var setting in modifier.Settings)
-                {
-                    settings.AdditionalSettings.Add(setting.Key, setting.Value);
-                }
-
                 _registeredModifiers.Add(modifier);
                 if(!Config.Instance.Mods.ContainsKey(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier)))
                 {
+                    settings.Enabled = false;
                     Config.Instance.Mods.Add(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);
                     Config.Instance.Save();
                 }

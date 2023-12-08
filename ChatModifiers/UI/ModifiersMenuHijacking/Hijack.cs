@@ -105,7 +105,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             {
                 toggleSetting.Value = value;
                 toggleSetting.ApplyValue();
-                UpdateConfig(customModifier, !value);
+                UpdateConfig(customModifier, value);
             });
             modifierButtonMap.Add(customModifier, gameplayModifierToggle);
             AddHoverHint(gameplayModifierToggle.transform as RectTransform, customModifier.Description);

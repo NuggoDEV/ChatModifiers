@@ -33,7 +33,6 @@ namespace ChatModifiers
     {
         public bool Enabled { get; set; }
         public Dictionary<string, object> AdditionalSettings { get; set; }
-
         public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
     }
 }
