@@ -3,6 +3,7 @@ using IPA.Config.Stores;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ChatModifiers
@@ -11,34 +12,28 @@ namespace ChatModifiers
     {
         internal const string FileName = "./UserData/ChatModifiersConfig.json";
 
-        internal static Config Instance { get; set; } = new Config();
+        internal static Config Instance { get; set; }
 
-        public Dictionary<string, ModifierSettings> Mods { get; set; } = new Dictionary<string, ModifierSettings>();
+        public Dictionary<string, ModifierSettings> Mods { get; set; }
 
-        public void Save()
-        {
-            string json = JsonConvert.SerializeObject(Instance, Newtonsoft.Json.Formatting.Indented);
-            System.IO.File.WriteAllText(FileName, json);
-        }
+        public Config() => Mods = new Dictionary<string, ModifierSettings>();
+
+        public void Save() => File.WriteAllText(FileName, JsonConvert.SerializeObject(Instance, Formatting.Indented));
 
         public void Load()
         {
-            if (System.IO.File.Exists(FileName))
-            {
-                string json = System.IO.File.ReadAllText(FileName);
-                Instance = JsonConvert.DeserializeObject<Config>(json);
-            }
+            if (File.Exists(FileName))
+                Instance = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FileName));
             else
-            {
                 Save();
-            }
         }
     }
 
     public class ModifierSettings
     {
-        public bool Enabled { get; set; } = true;
-        public Dictionary<string, object> AdditionalSettings { get; set; } = new Dictionary<string, object>();
+        public bool Enabled { get; set; }
+        public Dictionary<string, object> AdditionalSettings { get; set; }
+
         public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
     }
 }
