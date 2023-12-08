@@ -52,7 +52,7 @@ namespace ChatModifiers.API
         public Areas ActiveAreas { get; set; } = Areas.None;
         public Dictionary<string, object> Settings { get; set; } = new Dictionary<string, object>();
         public ViewController SettingsViewController { get; set; } = null;
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, Dictionary<string, object> settings)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, Dictionary<string, object> settings, ViewController viewController = null)
         {
             Name = name;
             Description = description;
@@ -63,6 +63,7 @@ namespace ChatModifiers.API
             Arguments = arguments;
             ActiveAreas = areas;
             Settings = settings;
+            SettingsViewController = viewController;
         }
     }
 }

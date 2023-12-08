@@ -52,15 +52,14 @@ namespace ChatModifiers.UI.MainMenu
                 customFlow._title = customModifier.Name;
                 customFlow._view = customModifier.SettingsViewController;
                 var activeFlow = DeepestChildFlowCoordinator(BeatSaberUI.MainFlowCoordinator);
-                activeFlow.PresentFlowCoordinator(flowCoordinator);
                 customFlow._lastFlowCoordinator = activeFlow;
+                activeFlow.PresentFlowCoordinator(flowCoordinator);
             }
             else
             {
                 Plugin.Log.Error("Unable to find flow coordinator! Cannot show Custom Flow Coordinator.");
             }
         }
-
 
         internal static FlowCoordinator DeepestChildFlowCoordinator(FlowCoordinator root)
         {
