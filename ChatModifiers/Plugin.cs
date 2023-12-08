@@ -1,4 +1,6 @@
-﻿using ChatModifiers.Installers;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.MenuButtons;
+using ChatModifiers.Installers;
 using ChatModifiers.UI;
 using ChatModifiers.Utilities;
 using IPA;
@@ -24,7 +26,6 @@ namespace ChatModifiers
             zenjector.Install<MenuInstaller>(Location.Menu);
             zenjector.Install<GameCoreInstaller>(Location.GameCore);
             TwitchConnection.Initialize();
-            CMFlow.CreateMenuButton();
         }
     }
 }

@@ -63,15 +63,29 @@ namespace ChatModifiers.Utilities
                         string argString = commandParts[i];
                         Type argType = modifier.Arguments[i - 1].Type;
 
-                        if (!IsAssignableType(argType, argString))
+                        if (argType.IsEnum)
+                        {
+                            Plugin.Log.Info($"Enum detected: {argType.Name}");
+                            string[] strings = argType.GetEnumNames();
+                            string matched = Array.Find(strings, name => string.Equals(name, argString, StringComparison.OrdinalIgnoreCase));
+                            if(matched != null)
+                            {
+                                object enumValue = Enum.Parse(argType, matched);
+                                arguments.Add(enumValue);
+                            }
+                        }
+                        else if (IsAssignableType(argType, argString))
+                        {
+                            object argValue = Convert.ChangeType(argString, argType);
+                            arguments.Add(argValue);
+
+                        }
+                        else
                         {
                             Plugin.Log.Warn($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
                             message.Channel.SendMessage($"Invalid argument type for {modifier.Name}. Expected: {argType.Name}");
                             return;
                         }
-
-                        object argValue = Convert.ChangeType(argString, argType);
-                        arguments.Add(argValue);
                     }
 
                     if (arguments.Count != modifier.Arguments.Length)
