@@ -25,7 +25,11 @@ namespace ChatModifiers.API
                 }
 
                 _registeredModifiers.Add(modifier);
-                Config.Instance.Mods.Add(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);
+                if(!Config.Instance.Mods.ContainsKey(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier)))
+                {
+                    Config.Instance.Mods.Add(ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);
+                    Config.Instance.Save();
+                }
                 CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
                 return true;
@@ -75,7 +79,7 @@ namespace ChatModifiers.API
             {
                 if (allDetails)
                 {
-                    Plugin.Log.Info($"Modifier: {modifier.Name} | Author: {modifier.Author} | Keyword: {modifier.CommandKeyword} | Description: {modifier.Description} | Arguments: {modifier.Arguments}");
+                    Plugin.Log.Info($"Modifier: {modifier.Name} | Author: {modifier.Author} | Keyword: {modifier.CommandKeyword} | Description: {modifier.Description} | Arguments: {modifier.Arguments} | Settings: {modifier.Settings.ToString()}");
                 }
                 else
                 {
