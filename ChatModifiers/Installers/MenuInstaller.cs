@@ -8,8 +8,8 @@ namespace ChatModifiers.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<CMFlow>().FromNewComponentOnNewGameObject().AsSingle();
             Container.Bind<CMView>().FromNewComponentAsViewController().AsSingle();
+            Container.BindInterfacesAndSelfTo<CMFlow>().FromNewComponentOnNewGameObject().AsSingle();
             Container.BindInterfacesAndSelfTo<CustomModifierMenuUI>().AsSingle();
         }
     }

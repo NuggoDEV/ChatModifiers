@@ -7,5 +7,5 @@
 				</grid>
 			</modifier-container>
 	</horizontal>
-	<toggle-setting text='Toggle Chat Modifiers' anchor-pos-y='-58' ignore-layout='true' id='modifiersToggleSetting' on-change='toggleChatModifiers'/>
+	<toggle-setting text='View Chat Modifiers' anchor-pos-y='-58' ignore-layout='true' id='modifiersToggleSetting' on-change='toggleChatModifiers'/>
 </bg>
