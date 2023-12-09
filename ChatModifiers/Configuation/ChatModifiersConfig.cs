@@ -13,9 +13,9 @@ namespace ChatModifiers
 
         public static Config Instance { get; set; }
 
-        public Dictionary<string, ModifierSettings> Mods { get; set; }
+        public Dictionary<string, ModifierSettings> Modifiers { get; set; }
 
-        public Config() => Mods = new Dictionary<string, ModifierSettings>();
+        public Config() => Modifiers = new Dictionary<string, ModifierSettings>();
 
         public void Save() => File.WriteAllText(FileName, JsonConvert.SerializeObject(Instance, Formatting.Indented));
 
@@ -45,8 +45,8 @@ namespace ChatModifiers
 
         public static ModifierSettings GetModifierSettingsFromIdentifier(string identifier)
         {
-            if (Config.Instance.Mods.ContainsKey(identifier))
-                return Config.Instance.Mods[identifier];
+            if (Config.Instance.Modifiers.ContainsKey(identifier))
+                return Config.Instance.Modifiers[identifier];
             else
                 return null;
         }

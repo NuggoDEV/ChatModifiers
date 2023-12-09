@@ -50,7 +50,14 @@ namespace ChatModifiers.UI.MainMenu
                 int i = 0;
                 foreach (var modifier in RegistrationManager._registeredModifiers)
                 {
-                    modifierList.data.Add(new ModifierListItem(i, modifier.Name, modifier.Author, BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(modifier.PathToIcon)));
+                    modifierList.data.Add(
+                        new ModifierListItem(
+                            i,
+                            modifier.Name,
+                            modifier.Author,
+                            BeatSaberMarkupLanguage.Utilities.LoadSpriteFromAssemblyAsync(modifier.PathToIcon).GetAwaiter().GetResult()
+                        )
+                    );
                 }
                 modifierList.data.Cast<object>();
                 modifierList.tableView.ReloadData();

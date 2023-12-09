@@ -144,7 +144,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Areas.cs" />
+    <Compile Include="API\ArgumentInfo.cs" />
     <Compile Include="API\CustomModifier.cs" />
+    <Compile Include="API\MessageInfo.cs" />
     <Compile Include="API\RegistrationManager.cs" />
     <Compile Include="Configuation\ChatModifiersConfig.cs" />
     <Compile Include="Installers\AppInstaller.cs" />

@@ -89,7 +89,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             gameplayModifierToggle.transform.SetParent(parent, false);
             string modifierIdentifier = ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(customModifier);
 
-            if (Config.Instance.Mods.TryGetValue(modifierIdentifier, out ModifierSettings settings))
+            if (Config.Instance.Modifiers.TryGetValue(modifierIdentifier, out ModifierSettings settings))
             {
                 toggleSetting.toggle.isOn = settings.Enabled;
                 toggleSetting.Value = settings.Enabled;
@@ -123,16 +123,16 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         {
             try
             {
-                string modifierIdentifier = ChatModifiers.Utilities.StaticUtils.GetModifierIdentifier(modifier);
+                string modifierIdentifier = Utilities.StaticUtils.GetModifierIdentifier(modifier);
 
-                if (Config.Instance.Mods.TryGetValue(modifierIdentifier, out ModifierSettings settings))
+                if (Config.Instance.Modifiers.TryGetValue(modifierIdentifier, out ModifierSettings settings))
                 {
                     settings.Enabled = newValue;
                 }
                 else
                 {
-                    Config.Instance.Mods.Add(modifierIdentifier, new ModifierSettings(modifier.Settings));
-                    Config.Instance.Mods[modifierIdentifier].Enabled = newValue;
+                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.Settings));
+                    Config.Instance.Modifiers[modifierIdentifier].Enabled = newValue;
                 }
 
                 Config.Instance.Save();
@@ -150,24 +150,16 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         private void ToggleChatModifiers(bool value)
         {
             if (modifiersTable != null)
-            {
                 modifiersTable.gameObject.SetActive(!value);
-            }
 
             if (hintText != null)
-            {
                 hintText.gameObject.SetActive(!value);
-            }
 
             if (statusText != null)
-            {
                 statusText.gameObject.SetActive(!value);
-            }
 
             if (theContainer != null)
-            {
                 theContainer.gameObject.SetActive(value);
-            }
         }
 
 
@@ -204,9 +196,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             foreach (CustomModifier modifier in registeredModifiers)
             {
                 if (!modifierButtonMap.ContainsKey(modifier))
-                {
                     CreateModifier(modifierGrid.transform, modifier);
-                }
             }
         }
 
@@ -221,9 +211,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
                     var customModifier = modifierButtonMap.FirstOrDefault(x => x.Value == child.GetComponent<GameplayModifierToggle>()).Key;
 
                     if (customModifier != null)
-                    {
                         modifierButtonMap.Remove(customModifier);
-                    }
 
                     Object.Destroy(child.gameObject);
                 }
@@ -234,7 +222,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
 
         private void SetupBSML(GameObject parent, string m)
         {
-            BeatSaberMarkupLanguage.BSMLParser.instance.Parse(BeatSaberMarkupLanguage.Utilities.GetResourceContent(System.Reflection.Assembly.GetExecutingAssembly(), m), parent, this);
+            BSMLParser.instance.Parse(BeatSaberMarkupLanguage.Utilities.GetResourceContent(System.Reflection.Assembly.GetExecutingAssembly(), m), parent, this);
             theContainer.gameObject.SetActive(false);
         }
 
@@ -312,8 +300,8 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             Plugin.Log.Info(customModifier.PathToIcon.ToString());
             Plugin.Log.Info(customModifier.CommandKeyword.ToString());
             this.index = index;
-            this.description = customModifier.Description;
-            this.modifierImageSprite = BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(customModifier.PathToIcon);
+            description = customModifier.Description;
+            modifierImageSprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteFromAssemblyAsync(customModifier.PathToIcon).GetAwaiter().GetResult();
             this.customModifier = customModifier;
         }
 
