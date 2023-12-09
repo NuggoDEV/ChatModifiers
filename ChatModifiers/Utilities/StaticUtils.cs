@@ -3,9 +3,9 @@ using ChatModifiers.UI.ModifiersMenuHijacking;
 
 namespace ChatModifiers.Utilities
 {
-    internal static class StaticUtils
+    public static class StaticUtils
     {
-        internal static string GetModifierIdentifier(CustomModifier modifier)
+        public static string GetModifierIdentifier(CustomModifier modifier)
         {
             return $"{modifier.Name}_{modifier.Author}";
         }

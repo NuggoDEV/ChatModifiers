@@ -7,11 +7,11 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ChatModifiers
 {
-    internal class Config
+    public class Config
     {
         internal const string FileName = "./UserData/ChatModifiersConfig.json";
 
-        internal static Config Instance { get; set; }
+        public static Config Instance { get; set; }
 
         public Dictionary<string, ModifierSettings> Mods { get; set; }
 
@@ -30,6 +30,7 @@ namespace ChatModifiers
 
     public class ModifierSettings
     {
+        internal string _identifier;
         public bool Enabled { get; set; }
         public Dictionary<string, object> AdditionalSettings { get; set; }
         public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
@@ -40,6 +41,14 @@ namespace ChatModifiers
                 AdditionalSettings[key] = value;
             else
                 AdditionalSettings.Add(key, value);
+        }
+
+        public static ModifierSettings GetModifierSettingsFromIdentifier(string identifier)
+        {
+            if (Config.Instance.Mods.ContainsKey(identifier))
+                return Config.Instance.Mods[identifier];
+            else
+                return null;
         }
     }
 }

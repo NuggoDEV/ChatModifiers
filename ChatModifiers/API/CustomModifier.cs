@@ -52,6 +52,14 @@ namespace ChatModifiers.API
         public Areas ActiveAreas { get; set; } = Areas.None;
         public Dictionary<string, object> Settings { get; set; } = new Dictionary<string, object>();
         public ViewController SettingsViewController { get; set; } = null;
+        public bool Register()
+        {
+            return RegistrationManager.RegisterModifier(this);
+        }
+        public bool Unregister()
+        {
+            return RegistrationManager.UnregisterModifier(this);
+        }
         public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, Dictionary<string, object> settings, ViewController viewController = null)
         {
             Name = name;

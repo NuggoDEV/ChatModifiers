@@ -7,7 +7,7 @@ namespace ChatModifiers.API
     {
         internal static List<CustomModifier> _registeredModifiers = new List<CustomModifier>();
 
-        public static bool RegisterModifier(CustomModifier modifier)
+        internal static bool RegisterModifier(CustomModifier modifier)
         {
             try
             {
@@ -39,9 +39,7 @@ namespace ChatModifiers.API
                 Plugin.Log.Notice($"Registration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "successful" : "failed")} for modifier {modifier.Name}");
             }
         }
-
-
-        public static bool UnregisterModifier(CustomModifier modifier)
+        internal static bool UnregisterModifier(CustomModifier modifier)
         {
             try
             {
@@ -67,7 +65,7 @@ namespace ChatModifiers.API
             }
         }
 
-        public static void LogAllModifiers(bool allDetails)
+        internal static void LogAllModifiers(bool allDetails)
         {
             Plugin.Log.Notice("Logging all modifiers");
             foreach (CustomModifier modifier in _registeredModifiers)

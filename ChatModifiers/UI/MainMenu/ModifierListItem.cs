@@ -35,7 +35,7 @@ namespace ChatModifiers.UI.MainMenu
         }
 
         [UIAction("modifierClicked")]
-        public void modifierPlaylistClicked()
+        public void ModifierPlaylistClicked()
         {
             CustomModifier clickedModifier = RegistrationManager._registeredModifiers[index];
             Plugin.Log.Info("Opening modifier menu for " + StaticUtils.GetModifierIdentifier(clickedModifier));
@@ -52,8 +52,8 @@ namespace ChatModifiers.UI.MainMenu
                 customFlow._title = customModifier.Name;
                 customFlow._view = customModifier.SettingsViewController;
                 var activeFlow = DeepestChildFlowCoordinator(BeatSaberUI.MainFlowCoordinator);
-                customFlow._lastFlowCoordinator = activeFlow;
                 activeFlow.PresentFlowCoordinator(flowCoordinator);
+                customFlow._lastFlowCoordinator = activeFlow;
             }
             else
             {

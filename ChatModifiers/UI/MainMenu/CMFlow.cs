@@ -28,6 +28,7 @@ namespace ChatModifiers.UI
         {
             SetLeftScreenViewController(null, ViewController.AnimationType.None);
             SetRightScreenViewController(null, ViewController.AnimationType.None);
+            Config.Instance.Save();
             _lastFlowCoordinator.DismissFlowCoordinator(this);
         }
 
