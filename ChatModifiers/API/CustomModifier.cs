@@ -4,42 +4,6 @@ using System.Collections.Generic;
 
 namespace ChatModifiers.API
 {
-    public enum Areas
-    {
-        None,
-        Menu,
-        Game,
-        Both
-    }
-
-    public class ArgumentInfo
-    {
-        public string Name { get; set; }
-        public Type Type { get; set; }
-
-        public ArgumentInfo(string name, Type type)
-        {
-            Name = name;
-            Type = type;
-        }
-    }
-
-    public class MessageInfo
-    {
-        public string Message { get; set; }
-        public string Author { get; set; }
-        public string Channel { get; set; }
-        public DateTime TimeStamp { get; set; }
-
-        public MessageInfo(string message, string author, string channel, DateTime timeStamp)
-        {
-            Message = message;
-            Author = author;
-            Channel = channel;
-            TimeStamp = timeStamp;
-        }
-    }
-
     public class CustomModifier
     {
         public string Name { get; set; } = "Default";
