@@ -24,7 +24,7 @@
 			</custom-list>
 		</stack>
 	</vertical>
-	<stack ignore-layout="true" preferred-width="10" preferred-height="10" anchor-pos-y="50" anchor-pos-x="40">
-		<button-with-icon icon='#ReloadIcon' on-click='reloadModifiers'/>
+	<stack ignore-layout="true" preferred-width="10" preferred-height="10" anchor-pos-y="35" anchor-pos-x="36">
+		<button-with-icon icon='#ReloadIcon' on-click='reloadModifiers' preferred-height='10' preferred-width='10' hover-hint='Reloads the list of modifier settings'/>
 	</stack>
 </bg>
