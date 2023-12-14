@@ -58,6 +58,7 @@ namespace ChatModifiers.UI.MainMenu
                             BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(modifier.PathToIcon)
                         )
                     );
+                    i++;
                 }
                 modifierList.data.Cast<object>();
                 modifierList.tableView.ReloadData();

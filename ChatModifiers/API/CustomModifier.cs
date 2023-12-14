@@ -1,4 +1,5 @@
 ﻿using HMUI;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 
@@ -48,6 +49,11 @@ namespace ChatModifiers.API
         /// Gets or sets the areas in which the custom modifier is active.
         /// </summary>
         public Areas ActiveAreas { get; set; } = Areas.None;
+
+        /// <summary>
+        /// Time in seconds before the custom modifier can be used again.
+        /// </summary>
+        public float CoolDown { get; set; } = 0f;
 
         /// <summary>
         /// Gets or sets a dictionary to hold settings for the custom modifier.
@@ -103,7 +109,7 @@ namespace ChatModifiers.API
         /// <param name="areas">Which areas in the game the custom modifier should be active for.</param>
         /// <param name="settings">A string, object dictionary to hold settings for the custom modifier.</param>
         /// <param name="viewController">View Controller to use for the custom modifier's settings UI.</param>
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, Dictionary<string, object> settings, ViewController viewController = null)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, float cooldown, Dictionary<string, object> settings, ViewController viewController = null)
         {
             Name = name;
             Description = description;
@@ -113,6 +119,7 @@ namespace ChatModifiers.API
             Function = function;
             Arguments = arguments;
             ActiveAreas = areas;
+            CoolDown = cooldown;
             Settings = settings;
             SettingsViewController = viewController;
         }

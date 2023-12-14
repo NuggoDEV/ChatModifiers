@@ -10,6 +10,7 @@ namespace ChatModifiers.Utilities
     internal class TwitchConnection
     {
         internal static Action<TwitchMessage, CustomModifier> OnMessage;
+        private static Dictionary<string, DateTime> lastCommandExecuted = new Dictionary<string, DateTime>();
 
         internal static void Initialize()
         {
@@ -43,10 +44,24 @@ namespace ChatModifiers.Utilities
             {
                 if (chatMessage.StartsWith($"!{modifier.CommandKeyword.ToLower()}"))
                 {
+                    if (lastCommandExecuted.ContainsKey(modifier.CommandKeyword))
+                    {
+                        DateTime lastExecutedTime = lastCommandExecuted[modifier.CommandKeyword];
+                        TimeSpan cooldownDuration = TimeSpan.FromSeconds(modifier.CoolDown);
+                        if (DateTime.Now - lastExecutedTime < cooldownDuration)
+                        {
+                            Plugin.Log.Warn($"Cooldown not elapsed for {modifier.Name}. Remaining cooldown: {cooldownDuration - (DateTime.Now - lastExecutedTime)}");
+                            message.Channel.SendMessage($"Cooldown not elapsed for {modifier.Name}. Remaining cooldown: {cooldownDuration - (DateTime.Now - lastExecutedTime)}");
+                            return;
+                        }
+                    }
+
                     if (modifier.ActiveAreas == Areas.Menu && GameCoreUtils.IsInGame) return;
                     if (modifier.ActiveAreas == Areas.Game && !GameCoreUtils.IsInGame) return;
                     if (modifier.ActiveAreas == Areas.None) return;
+
                     Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
+                    lastCommandExecuted[modifier.CommandKeyword] = DateTime.Now;
 
                     string[] commandParts = chatMessage.Split(' ');
                     List<object> arguments = new List<object>();

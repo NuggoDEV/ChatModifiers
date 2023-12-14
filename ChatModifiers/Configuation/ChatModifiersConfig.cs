@@ -71,7 +71,7 @@ namespace ChatModifiers
         /// <summary>
         /// Gets or sets whether the modifier is enabled.
         /// </summary>
-        internal bool Enabled { get; set; }
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// Gets or sets additional settings for the modifier.
