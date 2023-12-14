@@ -28,21 +28,40 @@ namespace ChatModifiers
         }
     }
 
+    /// <summary>
+    /// Represents settings for a custom modifier.
+    /// </summary>
     public class ModifierSettings
     {
+        /// <summary>
+        /// Gets or sets the identifier for the modifier settings.
+        /// </summary>
         internal string _identifier;
-        public bool Enabled { get; set; }
-        public Dictionary<string, object> AdditionalSettings { get; set; }
-        public ModifierSettings(Dictionary<string, object> additionalSettings) { AdditionalSettings = additionalSettings; }
 
-        public void SetAdditionalSetting(string key, object value)
+        /// <summary>
+        /// Gets or sets whether the modifier is enabled.
+        /// </summary>
+        internal bool Enabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional settings for the modifier.
+        /// </summary>
+        public Dictionary<string, object> AdditionalSettings { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModifierSettings"/> class.
+        /// </summary>
+        /// <param name="additionalSettings">Additional settings for the modifier.</param>
+        public ModifierSettings(Dictionary<string, object> additionalSettings)
         {
-            if (AdditionalSettings.ContainsKey(key))
-                AdditionalSettings[key] = value;
-            else
-                AdditionalSettings.Add(key, value);
+            AdditionalSettings = additionalSettings;
         }
 
+        /// <summary>
+        /// Gets the modifier settings associated with the specified identifier.
+        /// </summary>
+        /// <param name="identifier">The identifier of the modifier settings.</param>
+        /// <returns>The modifier settings or null if not found.</returns>
         public static ModifierSettings GetModifierSettingsFromIdentifier(string identifier)
         {
             if (Config.Instance.Modifiers.ContainsKey(identifier))
@@ -51,4 +70,5 @@ namespace ChatModifiers
                 return null;
         }
     }
+
 }

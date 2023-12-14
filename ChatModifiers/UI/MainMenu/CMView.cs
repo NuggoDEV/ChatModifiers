@@ -55,7 +55,7 @@ namespace ChatModifiers.UI.MainMenu
                             i,
                             modifier.Name,
                             modifier.Author,
-                            BeatSaberMarkupLanguage.Utilities.LoadSpriteFromAssemblyAsync(modifier.PathToIcon).GetAwaiter().GetResult()
+                            BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(modifier.PathToIcon)
                         )
                     );
                 }

@@ -301,7 +301,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
             Plugin.Log.Info(customModifier.CommandKeyword.ToString());
             this.index = index;
             description = customModifier.Description;
-            modifierImageSprite = BeatSaberMarkupLanguage.Utilities.LoadSpriteFromAssemblyAsync(customModifier.PathToIcon).GetAwaiter().GetResult();
+            modifierImageSprite = BeatSaberMarkupLanguage.Utilities.FindSpriteInAssembly(customModifier.PathToIcon);
             this.customModifier = customModifier;
         }
 
