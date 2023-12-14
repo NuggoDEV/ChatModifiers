@@ -1,5 +1,6 @@
 ﻿using IPA.Config.Stores;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -21,12 +22,41 @@ namespace ChatModifiers
 
         public void Load()
         {
-            if (File.Exists(FileName))
-                Instance = JsonConvert.DeserializeObject<Config>(File.ReadAllText(FileName));
-            else
+            try
+            {
+                if (File.Exists(FileName))
+                {
+                    string jsonContent = File.ReadAllText(FileName);
+
+                    if (!string.IsNullOrWhiteSpace(jsonContent))
+                    {
+                        Instance = JsonConvert.DeserializeObject<Config>(jsonContent);
+                    }
+                    else
+                    {
+                        // File exists but is empty
+                        Save();
+                    }
+                }
+                else
+                {
+                    // File does not exist
+                    Save();
+                }
+            }
+            catch (JsonException ex)
+            {
+                // something went really bad if this happens, so just save a new config
+                Console.WriteLine($"Error parsing JSON: {ex.Message}");
                 Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading configuration: {ex.Message}");
+            }
         }
     }
+
 
     /// <summary>
     /// Represents settings for a custom modifier.
