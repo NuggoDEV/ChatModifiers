@@ -56,9 +56,9 @@ namespace ChatModifiers.API
         public float CoolDown { get; set; } = 0f;
 
         /// <summary>
-        /// Gets or sets a dictionary to hold settings for the custom modifier.
+        /// Gets or sets a dictionary to hold the default settings for the custom modifier.
         /// </summary>
-        public Dictionary<string, object> Settings { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> DefaultSettings { get; set; } = new Dictionary<string, object>();
 
         /// <summary>
         /// Gets or sets the ViewController used for the custom modifier's settings UI.
