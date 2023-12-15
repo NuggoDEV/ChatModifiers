@@ -39,6 +39,14 @@ namespace ChatModifiers.API
                     Config.Instance.Save();
                 }
 
+                foreach (var setting in modifier.Settings)
+                {
+                    if (!settings.AdditionalSettings.ContainsKey(setting.Key))
+                    {
+                        settings.AdditionalSettings.Add(setting.Key, setting.Value);
+                    }
+                }
+
                 CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
                 return true;

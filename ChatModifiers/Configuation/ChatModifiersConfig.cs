@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace ChatModifiers
 {
+    [Serializable]
     public class Config
     {
         internal const string FileName = "./UserData/ChatModifiersConfig.json";
@@ -57,7 +58,7 @@ namespace ChatModifiers
         }
     }
 
-
+    [Serializable]
     /// <summary>
     /// Represents settings for a custom modifier.
     /// </summary>

@@ -43,7 +43,7 @@ namespace ChatModifiers.API
         /// <summary>
         /// Gets or sets an array of ArgumentInfo objects representing the arguments for the custom modifier's function.
         /// </summary>
-        public ArgumentInfo[] Arguments { get; set; } = null;
+        public ArgumentInfo[] Arguments { get; set; } = new ArgumentInfo[] {};
 
         /// <summary>
         /// Gets or sets the areas in which the custom modifier is active.
