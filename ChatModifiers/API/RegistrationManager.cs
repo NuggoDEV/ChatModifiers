@@ -34,16 +34,16 @@ namespace ChatModifiers.API
 
                 if (!Config.Instance.Modifiers.ContainsKey(modifierIdentifier))
                 {
-                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.Settings)
+                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.DefaultSettings)
                     {
                         Enabled = false,
-                        AdditionalSettings = new Dictionary<string, object>(modifier.Settings)
+                        AdditionalSettings = new Dictionary<string, object>(modifier.DefaultSettings)
                     });
                 }
                 else
                 {
                     var existingSettings = Config.Instance.Modifiers[modifierIdentifier].AdditionalSettings;
-                    foreach (var setting in modifier.Settings)
+                    foreach (var setting in modifier.DefaultSettings)
                     {
                         if (!existingSettings.ContainsKey(setting.Key))
                         {
@@ -111,7 +111,7 @@ namespace ChatModifiers.API
             {
                 if (allDetails)
                 {
-                    Plugin.Log.Info($"Modifier: {modifier.Name} | Author: {modifier.Author} | Keyword: {modifier.CommandKeyword} | Description: {modifier.Description} | Arguments: {modifier.Arguments} | Settings: {modifier.Settings.ToString()}");
+                    Plugin.Log.Info($"Modifier: {modifier.Name} | Author: {modifier.Author} | Keyword: {modifier.CommandKeyword} | Description: {modifier.Description} | Arguments: {modifier.Arguments} | Settings: {modifier.DefaultSettings.ToString()}");
                 }
                 else
                 {

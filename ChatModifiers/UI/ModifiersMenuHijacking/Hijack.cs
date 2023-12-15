@@ -131,7 +131,7 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
                 }
                 else
                 {
-                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.Settings));
+                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.DefaultSettings));
                     Config.Instance.Modifiers[modifierIdentifier].Enabled = newValue;
                 }
 

@@ -109,7 +109,7 @@ namespace ChatModifiers.API
         /// <param name="areas">Which areas in the game the custom modifier should be active for.</param>
         /// <param name="settings">A string, object dictionary to hold settings for the custom modifier.</param>
         /// <param name="viewController">View Controller to use for the custom modifier's settings UI.</param>
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, float cooldown, Dictionary<string, object> settings, ViewController viewController = null)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, float cooldown, Dictionary<string, object> defaultSettings, ViewController viewController = null)
         {
             Name = name;
             Description = description;
@@ -120,7 +120,7 @@ namespace ChatModifiers.API
             Arguments = arguments;
             ActiveAreas = areas;
             CoolDown = cooldown;
-            Settings = settings;
+            DefaultSettings = defaultSettings;
             SettingsViewController = viewController;
         }
     }
