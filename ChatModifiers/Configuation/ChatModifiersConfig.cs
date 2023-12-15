@@ -77,6 +77,7 @@ namespace ChatModifiers
         /// <summary>
         /// Gets or sets additional settings for the modifier.
         /// </summary>
+        [JsonProperty("AdditionalSettings")]
         public Dictionary<string, object> AdditionalSettings { get; set; }
 
         /// <summary>

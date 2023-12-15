@@ -29,24 +29,29 @@ namespace ChatModifiers.API
                     return false;
                 }
 
-                var settings = new ModifierSettings(modifier.Settings);
-                _registeredModifiers.Add(modifier);
+                string modifierIdentifier = Utilities.StaticUtils.GetModifierIdentifier(modifier);
 
-                if (!Config.Instance.Modifiers.ContainsKey(Utilities.StaticUtils.GetModifierIdentifier(modifier)))
+                if (!Config.Instance.Modifiers.ContainsKey(modifierIdentifier))
                 {
-                    settings.Enabled = false;
-                    Config.Instance.Modifiers.Add(Utilities.StaticUtils.GetModifierIdentifier(modifier), settings);
-                    Config.Instance.Save();
-                }
-
-                foreach (var setting in modifier.Settings)
-                {
-                    if (!settings.AdditionalSettings.ContainsKey(setting.Key))
+                    Config.Instance.Modifiers.Add(modifierIdentifier, new ModifierSettings(modifier.Settings)
                     {
-                        settings.AdditionalSettings.Add(setting.Key, setting.Value);
+                        Enabled = false,
+                        AdditionalSettings = new Dictionary<string, object>(modifier.Settings)
+                    });
+                }
+                else
+                {
+                    var existingSettings = Config.Instance.Modifiers[modifierIdentifier].AdditionalSettings;
+                    foreach (var setting in modifier.Settings)
+                    {
+                        if (!existingSettings.ContainsKey(setting.Key))
+                        {
+                            existingSettings.Add(setting.Key, setting.Value);
+                        }
                     }
                 }
 
+                Config.Instance.Save();
                 CustomModifierMenuUI.shouldRefresh = true;
                 Plugin.Log.Info($"Registered Modifier: {modifier.Name}");
                 return true;
@@ -61,6 +66,7 @@ namespace ChatModifiers.API
                 Plugin.Log.Notice($"Registration {(RegistrationManager._registeredModifiers.Contains(modifier) ? "successful" : "failed")} for modifier {modifier.Name}");
             }
         }
+
 
         /// <summary>
         /// Unregisters a custom modifier from the game.
