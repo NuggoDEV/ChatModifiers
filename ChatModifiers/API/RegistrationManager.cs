@@ -28,6 +28,7 @@ namespace ChatModifiers.API
                     Plugin.Log.Info($"Modifier {modifier.Name} is already registered.");
                     return false;
                 }
+                _registeredModifiers.Add(modifier);
 
                 string modifierIdentifier = Utilities.StaticUtils.GetModifierIdentifier(modifier);
 
