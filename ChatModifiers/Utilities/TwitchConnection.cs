@@ -64,6 +64,7 @@ namespace ChatModifiers.Utilities
                     }
 
                     Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
+                    BS_Utils.Gameplay.ScoreSubmission.DisableSubmission($"ChatModifier: {modifier.Name}");
                     lastCommandExecuted[modifier.CommandKeyword] = DateTime.Now;
 
                     string[] commandParts = chatMessage.Split(' ');
