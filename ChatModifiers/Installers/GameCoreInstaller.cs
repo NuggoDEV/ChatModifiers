@@ -8,7 +8,6 @@ namespace ChatModifiers.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameCoreUtils>().AsSingle().NonLazy();
             Container.Bind<NotificationController>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
         }
     }

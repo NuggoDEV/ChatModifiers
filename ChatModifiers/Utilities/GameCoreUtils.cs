@@ -8,21 +8,6 @@ using Zenject;
 
 namespace ChatModifiers.Utilities
 {
-    internal class GameCoreUtils : IInitializable, IDisposable
-    {
-        public void Initialize()
-        {
-            IsInGame = true;
-        }
-
-        public void Dispose()
-        {
-            IsInGame = false;
-        }
-
-        internal static bool IsInGame = false;
-    }
-
     public class NotificationController : MonoBehaviour
     {
         [Inject] private CoreGameHUDController _coreGameHudController;

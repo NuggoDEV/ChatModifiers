@@ -56,9 +56,12 @@ namespace ChatModifiers.Utilities
                         }
                     }
 
-                    if (modifier.ActiveAreas == Areas.Menu && GameCoreUtils.IsInGame) return;
-                    if (modifier.ActiveAreas == Areas.Game && !GameCoreUtils.IsInGame) return;
                     if (modifier.ActiveAreas == Areas.None) return;
+                    if (modifier.ActiveAreas != Areas.Both)
+                    {
+                        if (modifier.ActiveAreas == Areas.Menu && GameState.IsInGame) return;
+                        if (modifier.ActiveAreas == Areas.Game && !GameState.IsInGame) return;
+                    }
 
                     Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
                     lastCommandExecuted[modifier.CommandKeyword] = DateTime.Now;

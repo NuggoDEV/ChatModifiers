@@ -1,7 +1,11 @@
 ﻿using ChatModifiers.Installers;
 using ChatModifiers.Utilities;
 using IPA;
+using IPA.Utilities;
 using SiraUtil.Zenject;
+using System;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
 
 namespace ChatModifiers
@@ -22,6 +26,7 @@ namespace ChatModifiers
             zenjector.Install<AppInstaller>(Location.App);
             zenjector.Install<MenuInstaller>(Location.Menu);
             zenjector.Install<GameCoreInstaller>(Location.GameCore);
+            SceneManager.activeSceneChanged += GameState.SceneManager_activeSceneChanged;
             TwitchConnection.Initialize();
         }
     }
