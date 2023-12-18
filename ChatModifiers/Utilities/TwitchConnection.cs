@@ -40,6 +40,12 @@ namespace ChatModifiers.Utilities
             if (!chatMessage.StartsWith("!"))
                 return;
 
+            if(chatMessage.StartsWith("!cm about"))
+            {
+                message.Channel.SendMessage(HandleAboutCommand(message));
+                return;
+            }
+
             foreach (CustomModifier modifier in RegistrationManager._registeredModifiers)
             {
                 if (chatMessage.StartsWith($"!{modifier.CommandKeyword.ToLower()}"))
@@ -64,7 +70,10 @@ namespace ChatModifiers.Utilities
                     }
 
                     Plugin.Log.Info($"Executing Modifier: {modifier.Name}");
-                    BS_Utils.Gameplay.ScoreSubmission.DisableSubmission($"ChatModifier: {modifier.Name}");
+                    if (modifier.DisableScoreSubmission)
+                    {
+                        BS_Utils.Gameplay.ScoreSubmission.DisableSubmission($"ChatModifier: {modifier.Name}");
+                    }
                     lastCommandExecuted[modifier.CommandKeyword] = DateTime.Now;
 
                     string[] commandParts = chatMessage.Split(' ');
@@ -131,6 +140,19 @@ namespace ChatModifiers.Utilities
             {
                 return null;
             }
+        }
+
+        internal static string HandleAboutCommand(TwitchMessage message)
+        {
+            string message1 = "ChatModifers v0.0.1 ";
+            message1 += "\n| Created by: Speecil and Nuggo ";
+            message1 += "\n\n| Available Commands: ";
+            message1 += "\n!about - Displays information about ChatModifiers ";
+            foreach (CustomModifier modifier in RegistrationManager._registeredModifiers)
+            {
+                message1 += $"\n || !{modifier.CommandKeyword} - {modifier.Description}";
+            }
+            return message1;
         }
     }
 }

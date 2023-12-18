@@ -55,6 +55,12 @@ namespace ChatModifiers.API
         /// </summary>
         public float CoolDown { get; set; } = 0f;
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the custom modifier should disable score submission on execution
+        /// </summary>
+        public bool DisableScoreSubmission { get; set; } = true;
+
         /// <summary>
         /// Gets or sets a dictionary to hold the default settings for the custom modifier.
         /// </summary>
@@ -109,7 +115,7 @@ namespace ChatModifiers.API
         /// <param name="areas">Which areas in the game the custom modifier should be active for.</param>
         /// <param name="settings">A string, object dictionary to hold settings for the custom modifier.</param>
         /// <param name="viewController">View Controller to use for the custom modifier's settings UI.</param>
-        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, float cooldown, Dictionary<string, object> defaultSettings, ViewController viewController = null)
+        public CustomModifier(string name, string description, string author, string pathToIcon, string commandKeyword, Action<MessageInfo, object[]> function, ArgumentInfo[] arguments, Areas areas, float cooldown, Dictionary<string, object> defaultSettings, ViewController viewController = null, bool disableScoreSubmission = true)
         {
             Name = name;
             Description = description;
@@ -122,6 +128,7 @@ namespace ChatModifiers.API
             CoolDown = cooldown;
             DefaultSettings = defaultSettings;
             SettingsViewController = viewController;
+            DisableScoreSubmission = disableScoreSubmission;
         }
     }
 }

@@ -119,5 +119,28 @@ namespace ChatModifiers.API
                 }
             }
         }
+
+        internal static bool ScoreSubmissionDisabled(out string message)
+        {
+            bool disabled = false;
+            message = string.Empty;
+
+            foreach (CustomModifier modifier in _registeredModifiers)
+            {
+                if (modifier.ModifierSettings.Enabled && modifier.DisableScoreSubmission)
+                {
+                    if (disabled)
+                    {
+                        message += ", ";
+                    }
+
+                    message += modifier.Name;
+                    disabled = true;
+                }
+            }
+
+            return disabled;
+        }
+
     }
 }
