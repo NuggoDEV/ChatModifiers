@@ -13,22 +13,40 @@ namespace ChatModifiers.Utilities
 {
     internal class WarningHandler : IAffinity
     {
-        private static void ShowWarningText(SinglePlayerLevelSelectionFlowCoordinator __instance, Action beforeSceneSwitchCallback, bool practice, string titleText, string messageText)
+        private void ShowWarningText(SinglePlayerLevelSelectionFlowCoordinator __instance, Action beforeSceneSwitchCallback, bool practice, string titleText, string messageText)
         {
             SimpleDialogPromptViewController viewCon = ReflectionUtil.GetField<SimpleDialogPromptViewController, SinglePlayerLevelSelectionFlowCoordinator>(__instance, "_simpleDialogPromptViewController");
-            viewCon.Init(titleText, messageText, Localization.Get("BUTTON_OK"), (Action<int>)(buttonNumber => __instance.StartLevel((Action)(() =>
+
+            viewCon.Init(titleText, messageText, Localization.Get("BUTTON_YES"), Localization.Get("BUTTON_NO"), (Action<int>)(buttonNumber =>
             {
-                ReflectionUtil.InvokeMethod<object, SinglePlayerLevelSelectionFlowCoordinator>(__instance, "DismissViewController", new object[4]
+                if (buttonNumber == 0)
                 {
+                    __instance.StartLevel(() =>
+                    {
+                        ReflectionUtil.InvokeMethod<object, SinglePlayerLevelSelectionFlowCoordinator>(__instance, "DismissViewController", new object[4]
+                        {
                     (object) viewCon,
                     (object) ViewController.AnimationDirection.Horizontal,
                     null,
                     (object) true
-                });
-                if (beforeSceneSwitchCallback == null)
-                    return;
-                beforeSceneSwitchCallback();
-            }), practice)));
+                        });
+                        if (beforeSceneSwitchCallback == null)
+                            return;
+                        beforeSceneSwitchCallback();
+                    }, practice);
+                }
+                if (buttonNumber == 1)
+                {
+                    ReflectionUtil.InvokeMethod<object, SinglePlayerLevelSelectionFlowCoordinator>(__instance, "DismissViewController", new object[4]
+                    {
+                    (object) viewCon,
+                    (object) ViewController.AnimationDirection.Horizontal,
+                    null,
+                    (object) false
+                    });
+                }
+
+            }));
             ReflectionUtil.InvokeMethod<object, SinglePlayerLevelSelectionFlowCoordinator>(__instance, "PresentViewController", new object[4]
             {
                 (object) viewCon,

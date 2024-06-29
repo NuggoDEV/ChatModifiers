@@ -39,8 +39,8 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         [UIObject("modifierContainer")]
         private GameObject modifierContainer;
 
-        [UIObject("noModsInstalledText")]
-        private GameObject noModsInstalledText;
+        [UIComponent("noModsInstalledText")]
+        private TextMeshProUGUI noModsInstalledText;
 
 
         // yoinked from bsml and altered to work
@@ -166,10 +166,8 @@ namespace ChatModifiers.UI.ModifiersMenuHijacking
         [UIAction("#post-parse")]
         private void PostParse()
         {
-            if (theContainer == null) return;
+            noModsInstalledText.alignment = TextAlignmentOptions.Center;
         }
-
-
 
         private void ReloadModifiers()
         {
